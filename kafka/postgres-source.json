@@ -1,0 +1,23 @@
+{
+  "name": "postgres-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "plugin.name": "pgoutput",
+    "database.hostname": "your_host",
+    "database.port": "your_port",
+    "database.user": "your_user",
+    "database.password": "your_password",
+    "database.dbname": "your_db_name",
+    "database.server.name": "crypto_server",
+    "topic.prefix": "crypto_pg",
+    "table.include.list": "binance.binance_klines,binance.binance_24h_stats,binance.binance_latest_prices,binance.binance_order_book,binance.binance_recent_trades", 
+    "database.sslmode": "require",
+    "slot.name": "debezium_slot",
+    "publication.name": "your publication_name",
+    "create.publication": "false",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "false",
+    "value.converter.schemas.enable": "false"
+  }
+}
