@@ -83,6 +83,9 @@ Each table has its own consumer:
 ```
 python consumers/latest_prices.py
 ```
+## Grafana Visuals
+![Grafana](Grafana%20Visuals/Screenshot%202025-07-02%20172203.png)
+![Grafana](Grafana%20Visuals/Screenshot%202025-07-02%20172317.png)
 
 ## Features
 
