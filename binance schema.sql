@@ -39,15 +39,6 @@ CREATE TABLE IF NOT EXISTS binance.binance_latest_prices (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Time of last update
 );
 
-INSERT INTO binance.binance_latest_prices (symbol, price)
-VALUES ('BTCUSDT', 202020.75)
-ON CONFLICT (symbol)
-DO UPDATE SET
-    price = EXCLUDED.price,
-    updated_at = CURRENT_TIMESTAMP;
-
-
-
 CREATE TABLE IF NOT EXISTS binance.binance_order_book (
     symbol VARCHAR(20),
     side VARCHAR(4) CHECK (side IN ('bid', 'ask')),  -- 'bid' or 'ask'
@@ -72,23 +63,20 @@ CREATE TABLE IF NOT EXISTS binance.binance_recent_trades (
 
 
 select * from binance.binance_24h_stats;
-select * from binance.binance_klines bk;
+select * from binance.binance_klines;
 select * from binance.binance_latest_prices;
-select * from binance.binance_order_book bob;
-
-select count(symbol)
-from binance.binance_24h_stats;
+select * from binance.binance_order_book;
 
 -- 1. Check if logical replication is enabled
 SHOW wal_level;
 
 -- 2. Attempt to create a publication for your Binance tables
-CREATE PUBLICATION binance_pub FOR TABLE 
-    binance.binance_24h_stats,
-    binance.binance_klines,
-    binance.binance_order_book,
-    binance.binance_latest_prices,
-    binance.binance_recent_trades;
+CREATE PUBLICATION debezium_pub FOR TABLE
+  binance.binance_latest_prices,
+  binance.binance_24h_stats,
+  binance.binance_klines,
+  binance.binance_order_book,
+  binance.binance_recent_trades;
 
 -- View publication tables
 SELECT * FROM pg_publication_tables;
